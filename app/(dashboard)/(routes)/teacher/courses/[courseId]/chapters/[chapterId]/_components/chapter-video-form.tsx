@@ -3,7 +3,7 @@
 import { useState } from "react";
 import * as z from "zod";
 import axios from "axios";
-import MuxPlayer from "@mux/mux-player-react"
+import MuxPlayer from "@mux/mux-player-react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -73,7 +73,7 @@ export const ChapterVideoForm = ({
           </div>
         ) : (
           <div className="relative aspect-video mt-2">
-            <MuxPlayer playbackId={initialData?.muxData?.playbackId || ""}/>
+            <MuxPlayer playbackId={initialData?.muxData?.playbackId || ""} />
           </div>
         ))}
       {isEditing && (
@@ -87,7 +87,7 @@ export const ChapterVideoForm = ({
             }}
           />
           <div className="text-xs text-muted-foreground mt-4">
-            Upload this chapter's video
+            Upload this chapter&apos;s video
           </div>
         </div>
       )}
