@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 
@@ -8,14 +7,18 @@ export async function DELETE(
   { params }: { params: { courseId: string; attachmentId: string } }
 ) {
   try {
-    const { userId } = auth();
+    // Await the auth function
+    const { userId } = await auth();
+    
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+
+    // Check if the user owns the course
     const courseOwner = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId: userId,
+        userId: userId, // Ensure course is owned by the current user
       },
     });
 
@@ -23,10 +26,10 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    // Delete the attachment by its ID
     const attachment = await db.attachment.delete({
       where: {
-        courseId: params.courseId,
-        id: params.attachmentId,
+        id: params.attachmentId, // Ensure you're using the correct field
       },
     });
 
